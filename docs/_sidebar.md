@@ -1,3 +1,3 @@
 - Introduction
 
-  - [The Workshop](README.md)
+  - [The Workshop](/)
