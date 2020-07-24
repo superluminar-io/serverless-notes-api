@@ -11,13 +11,13 @@ Whether you have a startup or a big enterprise trying to move to the cloud, mana
 In this workshop you will learn how to facilitate AWS Infrastructure as Code features. You will develop and automatically deploy an application without provisioning servers nor databases or the like.
 
 You will learn:
-– How to use AWS for serverless applications
-– Deploy an HTTP API service
-– Manage Storage with DynamoDB
-– Use AWS Lambda for business logic
-– Monitor and trace your application with Cloudwatch and XRay
-– How to do Continuous Delivery with CodePipeline
-– How to do blue/green deployments using AWS Lambda and CodeDeploy
+* How to use AWS for serverless applications
+* Deploy an HTTP API service
+* Manage Storage with DynamoDB
+* Use AWS Lambda for business logic
+* Monitor and trace your application with Cloudwatch and XRay
+* How to do Continuous Delivery with CodePipeline
+* How to do blue/green deployments using AWS Lambda and CodeDeploy
 
 ## Audience & Requirements
 
