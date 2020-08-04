@@ -6,7 +6,7 @@
 * Setup a REST API with AWS
 * Use VTL to create a functionless API
 
-## DynamoDB
+## Database
 
 Before we create the API, we need a database to persist the notes. Therefore
 we use [DynamoDB](https://aws.amazon.com/dynamodb/) as a full-managed NoSQL database.
@@ -214,3 +214,89 @@ ServerlessNotesApiStack.ServerlessNotesApiEndpointXXXXXX = https://xxxxxxxx.exec
   ```
 
   Awesome! We just created the first endpoint of the REST API to receive a list of notes. Plus we already communicate with the database!
+
+## API: Create notes
+
+After creating the first endpoint to list all notes, we would like to continue and extend the API to support the creation of new notes. The procedure is very similar to what we have done in the previous section: We are going to add a new method to the API, a new AWS integration as well as a new request/response mapping. Let's get started!
+
+1. Create a new file in the templates folder: `touch templates/noteCreate.ts`
+2. Update the `templates/noteCreate.ts` file:
+  ```typescript
+  export const request = (tableName: string): string => `
+  { 
+    "TableName": "${tableName}",
+    "Item": {
+      "id": {
+        "S": "$context.requestId"
+      },
+      "text": {
+        "S": "$input.path('$.text')"
+      }
+    }
+  }
+  `;
+
+  export const response = `
+  {
+    "id": "$context.requestId"
+  }
+  `;
+  ```
+  The mapping here is fairly simple: We take the `text` received by the post data and use it to define a `text` attribute as part of the note. Additionally, we use the unique `requestId` from the [context](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html#context-variable-reference) as the identifier for the new note. For the response mapping, we just take the `requestId` and give it back to the requester.
+3. Extend `lib/serverless-notes-api-stack.ts`:
+  ```diff
+  @@ -4,6 +4,7 @@ import * as iam from '@aws-cdk/aws-iam';
+   import * as apigateway from '@aws-cdk/aws-apigateway';
+  
+   import * as notesList from '../templates/notesList';
+  +import * as noteCreate from '../templates/noteCreate';
+  
+   export class ServerlessNotesApiStack extends cdk.Stack {
+     constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  @@ -50,5 +51,29 @@ export class ServerlessNotesApiStack extends cdk.Stack {
+       notes.addMethod('GET', notesListIntegration, {
+         methodResponses: [{ statusCode: '200' }],
+       });
+  +
+  +    const notesCreateIntegration = new apigateway.AwsIntegration({
+  +      service: 'dynamodb',
+  +      action: 'PutItem',
+  +      options: {
+  +        credentialsRole: apiRole,
+  +        passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
+  +        requestTemplates: {
+  +          'application/json': noteCreate.request(table.tableName),
+  +        },
+  +        integrationResponses: [
+  +          {
+  +            statusCode: '200',
+  +            responseTemplates: {
+  +              'application/json': noteCreate.response,
+  +            },
+  +          },
+  +        ],
+  +      },
+  +    });
+  +
+  +    notes.addMethod('POST', notesCreateIntegration, {
+  +      methodResponses: [{ statusCode: '200' }],
+  +    });
+     }
+   }
+  ```
+  The only thing that really changed here, compared to the list endpoint, is the action. Instead of running a scan operation, we run `PutItem` here.
+4. Deploy the changes: `cdk deploy`
+5. Run the following curl command. Don't forget to update the endpoint!
+  ```bash
+  curl -X POST https://xxxxxx.execute-api.eu-west-1.amazonaws.com/prod/notes --data '{ "text": "Hello World" }' -H 'Content-Type: application/json' | jq
+  ```
+
+  You should get back something like this:
+
+  ```json
+  {
+    "id": "b3986b15-7a7b-4ba2-b17a-9f64b4509cc7"
+  }
+  ```
+
+  Great! We just created the first note. Feel free to run `GET /notes` again to see the note.
