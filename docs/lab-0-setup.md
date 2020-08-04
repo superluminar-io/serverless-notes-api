@@ -58,7 +58,12 @@ With AWS CDK we can easily describe all the infrastructure we need in so called 
 
 ![AWS CDK After Init](/_media/lab0/aws_cdk_after_init.png)
 
-6. We can now deploy our CloudFormation stack for the first time: `cdk deploy`
+5. Before we use the CDK for the first time, we would like to update the dependencies to make sure we run on the latest version. Run these commands:
+  ```bash
+  npm i @aws-cdk/core@latest --save
+  npm i aws-cdk@latest @aws-cdk/assert --save-dev
+  ```
+6. We can now deploy our CloudFormation stack: `cdk deploy`
 7. Go to the [CloudFormation service page](http://console.aws.amazon.com/cloudformation) to see your stack.
 
 This stack is pretty empty because we didn't describe any infrastructure yet, but everything is prepared now to go to the next lab.

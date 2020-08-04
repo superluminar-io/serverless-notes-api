@@ -1,2 +1,3 @@
 - [Prerequisites](/)
 - [Lab 0 - Setup](/lab-0-setup)
+- [Lab 1 - API](/lab-1-api)
