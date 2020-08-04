@@ -22,3 +22,5 @@ You will learn:
 ## Audience & Requirements
 
 A laptop is the only requirement for attending the workshop. We will do most of the development in the browser, so feel free to bring whatever operating system suits you best.  Also an AWS account with administrator access is necessary. If you plan to attend as a group, one AWS account per 2-3 people is sufficient.
+
+Since we are using [AWS Cloud9](https://aws.amazon.com/cloud9/) in this workshop, you don’t need any additional software except from an up-to-date web browser.

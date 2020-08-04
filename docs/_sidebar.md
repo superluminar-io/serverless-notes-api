@@ -1,3 +1,2 @@
-- Introduction
-
-  - [The Workshop](/)
+- [Prerequisites](/)
+- [Lab 0 - Setup](/lab-0-setup)

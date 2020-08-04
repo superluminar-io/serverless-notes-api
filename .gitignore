@@ -11,3 +11,5 @@ cdk.out
 
 # Parcel default cache directory
 .parcel-cache
+
+.DS_Store
