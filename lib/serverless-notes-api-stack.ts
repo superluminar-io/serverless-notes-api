@@ -2,7 +2,12 @@ import * as cdk from '@aws-cdk/core';
 import * as apigateway from '@aws-cdk/aws-apigateway';
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
 import * as iam from '@aws-cdk/aws-iam';
-import * as templates from '../templates';
+
+import * as notesList from '../templates/notesList';
+import * as noteCreate from '../templates/noteCreate';
+import * as noteGet from '../templates/noteGet';
+import * as noteEdit from '../templates/noteEdit';
+import * as noteDelete from '../templates/noteDelete';
 
 export class ServerlessNotesApiStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -36,13 +41,13 @@ export class ServerlessNotesApiStack extends cdk.Stack {
         credentialsRole: apiRole,
         passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
         requestTemplates: {
-          'application/json': templates.notesList.request(table.tableName),
+          'application/json': notesList.request(table.tableName),
         },
         integrationResponses: [
           {
             statusCode: '200',
             responseTemplates: {
-              'application/json': templates.notesList.response,
+              'application/json': notesList.response,
             },
           },
         ],
@@ -61,13 +66,13 @@ export class ServerlessNotesApiStack extends cdk.Stack {
         credentialsRole: apiRole,
         passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
         requestTemplates: {
-          'application/json': templates.noteCreate.request(table.tableName),
+          'application/json': noteCreate.request(table.tableName),
         },
         integrationResponses: [
           {
             statusCode: '200',
             responseTemplates: {
-              'application/json': templates.noteCreate.response,
+              'application/json': noteCreate.response,
             },
           },
         ],
@@ -88,13 +93,13 @@ export class ServerlessNotesApiStack extends cdk.Stack {
         credentialsRole: apiRole,
         passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
         requestTemplates: {
-          'application/json': templates.noteGet.request(table.tableName),
+          'application/json': noteGet.request(table.tableName),
         },
         integrationResponses: [
           {
             statusCode: '200',
             responseTemplates: {
-              'application/json': templates.noteGet.response,
+              'application/json': noteGet.response,
             },
           },
         ],
@@ -113,13 +118,13 @@ export class ServerlessNotesApiStack extends cdk.Stack {
         credentialsRole: apiRole,
         passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
         requestTemplates: {
-          'application/json': templates.noteEdit.request(table.tableName),
+          'application/json': noteEdit.request(table.tableName),
         },
         integrationResponses: [
           {
             statusCode: '200',
             responseTemplates: {
-              'application/json': templates.noteEdit.response,
+              'application/json': noteEdit.response,
             },
           },
         ],
@@ -138,13 +143,13 @@ export class ServerlessNotesApiStack extends cdk.Stack {
         credentialsRole: apiRole,
         passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
         requestTemplates: {
-          'application/json': templates.noteDelete.request(table.tableName),
+          'application/json': noteDelete.request(table.tableName),
         },
         integrationResponses: [
           {
             statusCode: '200',
             responseTemplates: {
-              'application/json': templates.noteDelete.response,
+              'application/json': noteDelete.response,
             },
           },
         ],

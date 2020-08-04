@@ -61,7 +61,10 @@ With AWS CDK we can easily describe all the infrastructure we need in so called 
 5. Before we use the CDK for the first time, we would like to update the dependencies to make sure we run on the latest version. Run these commands:
   ```bash
   npm i @aws-cdk/core@latest --save
-  npm i aws-cdk@latest @aws-cdk/assert --save-dev
+  npm i aws-cdk@latest @aws-cdk/assert typescript@latest --save-dev
+
+  # Please also run this command, we need it later
+  sudo yum install jq 
   ```
 6. We can now deploy our CloudFormation stack: `cdk deploy`
 7. Go to the [CloudFormation service page](http://console.aws.amazon.com/cloudformation) to see your stack.
