@@ -6,10 +6,6 @@
 * Setup a REST API with AWS
 * Use VTL to create a functionless API
 
-## Overview
-
-_tbd_
-
 ## DynamoDB
 
 Before we create the API, we need a database to persist the notes. Therefore
@@ -60,13 +56,13 @@ we use [DynamoDB](https://aws.amazon.com/dynamodb/) as a full-managed NoSQL data
 
 ## API: List all notes
 
-Next step is to create the API and connect it with the database to list all notes and store new ones. For that, we use the service [API Gateway](https://aws.amazon.com/api-gateway/). API Gateway lets you create APIs at any scale. 
+Next step is to create the API and connect it with the database to list all notes. For that, we use the service [API Gateway](https://aws.amazon.com/api-gateway/).
 
 1. As always, we need new NPM packages:
   ```bash
   npm i @aws-cdk/aws-apigateway @aws-cdk/aws-iam --save
   ```
-2. We create a new IAM role to give the API access to the database:
+2. Create a new IAM role to give the API access to the database:
   ```diff
    import * as cdk from '@aws-cdk/core';
    import * as dynamodb from '@aws-cdk/aws-dynamodb';
@@ -92,7 +88,7 @@ Next step is to create the API and connect it with the database to list all note
      }
    }
   ```
-3. We create the API Gateway with the first endpoint to get a list of notes:
+3. Create the API Gateway with the first endpoint to get a list of notes:
   ```diff
    import * as cdk from '@aws-cdk/core';
    import * as dynamodb from '@aws-cdk/aws-dynamodb';
